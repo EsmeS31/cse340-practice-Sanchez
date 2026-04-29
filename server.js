@@ -5,7 +5,7 @@ const app = express();
 const name = process.env.NAME; // <-- NEW
 
 app.get('/', (req, res) => {
-    res.send(`Hello, ${name}!`); // <-- UPDATED
+    res.send(`Welcome, ${name}!`); // <-- UPDATED
 });
 
 const PORT = 3000;

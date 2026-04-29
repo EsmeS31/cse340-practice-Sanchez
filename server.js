@@ -2,10 +2,10 @@ import express from 'express';
 
 const app = express();
 
-const name = process.env.Esme; // <-- NEW
+const name = process.env.NAME; // <-- NEW
 
 app.get('/', (req, res) => {
-    res.send(`Hello, ${Esme}!`); // <-- UPDATED
+    res.send(`Hello, ${name}!`); // <-- UPDATED
 });
 
 const PORT = 3000;

@@ -113,4 +113,14 @@ body {
         box-shadow: none;
         background-color: #f0ede9;
     }
+
+img {
+    margin: 2.5rem auto 0;
+    display: block;
+    width: 100%;
+    max-width: 680px;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: #f0ede9;
+}
 }

@@ -1,24 +1,26 @@
-import { Router } from 'express';
+import express from 'express';
 
-// Create a new router instance
-const router = Router();
+const router = express.Router();
 
-import { addDemoHeaders } from '../middleware/demo/headers.js';
-import { catalogPage, courseDetailPage } from './catalog/catalog.js';
-import { homePage, aboutPage, demoPage, testErrorPage } from './index.js';
+// EXISTING imports
+import { homePage } from './controllers/index.js';
 
-export default router;
+// NEW faculty imports
+import {
+    facultyListPage,
+    facultyDetailPage
+} from './controllers/faculty/faculty.js';
 
-// Home and basic pages
+
+// existing routes
 router.get('/', homePage);
-router.get('/about', aboutPage);
 
-// Course catalog routes
-router.get('/catalog', catalogPage);
-router.get('/catalog/:courseId', courseDetailPage);
 
-// Demo page with special middleware
-router.get('/demo', addDemoHeaders, demoPage);
+// NEW faculty routes
+router.get('/faculty', facultyListPage);
 
-// Route to trigger a test error
-router.get('/test-error', testErrorPage);
+router.get('/faculty/:facultyId', facultyDetailPage);
+
+
+// export router
+export default router;

@@ -1,3 +1,5 @@
+<%- include('../partials/header') %>
+
 <h1><%= faculty.name %></h1>
 
 <p><strong>Office:</strong> <%= faculty.office %></p>
@@ -10,4 +12,8 @@
 
 <p><strong>Title:</strong> <%= faculty.title %></p>
 
-<a href="/faculty">Back to Faculty Directory</a>
+<p>
+    <a href="/faculty">Back to Faculty Directory</a>
+</p>
+
+<%- include('../partials/footer') %>

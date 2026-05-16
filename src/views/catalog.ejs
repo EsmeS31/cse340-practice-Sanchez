@@ -1,17 +1,8 @@
-<%- include('partials/header') %>
-<main>
-    <h1><%= title %></h1>
-
-    <ul class="course-list">
-     <% courses.forEach(course => { %>
-<% } %>
-            <li class="course-item">
-                <a href="/catalog/<%= course.id %>">
-                    <strong><%= course.id %></strong> - <%= course.title %>
-                </a>
-                <p><%= course.description %></p>
-            </li>
-        <% }); %>
-    </ul>
-</main>
-<%- include('partials/footer') %>
+<% Object.values(courses).forEach(course => { %>
+    <li class="course-item">
+        <a href="/catalog/<%= course.id %>">
+            <strong><%= course.id %></strong> - <%= course.title %>
+        </a>
+        <p><%= course.description %></p>
+    </li>
+<% }); %>

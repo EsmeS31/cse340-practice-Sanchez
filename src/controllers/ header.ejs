@@ -9,13 +9,11 @@
         const currentPort = window.location.port;
         const wsPort = currentPort ? (parseInt(currentPort) + 1) : 3001;
         const ws = new WebSocket(`ws://${host}:${wsPort}`);
-        ws.onclose = () => {
-            setTimeout(() => location.reload(), 2000);
-        };
+        ws.onclose = () => setTimeout(() => location.reload(), 2000);
     </script>
     <% } %>
 </head>
-<body class="<%= bodyClass || '' %>">
+<body class="<%= typeof bodyClass !== 'undefined' ? bodyClass : '' %>">
     <header>
         <nav>
             <ul>
@@ -23,8 +21,7 @@
                 <li><a href="/about">About</a></li>
                 <li><a href="/catalog">Course Catalog</a></li>
                 <li><a href="/demo">Middleware Demo</a></li>
-                <li><a href="/faculty">Faculty Directory</a></li>
             </ul>
         </nav>
     </header>
-    <div><%= greeting || '' %></div>
+    <div><%= typeof greeting !== 'undefined' ? greeting : '' %></div>

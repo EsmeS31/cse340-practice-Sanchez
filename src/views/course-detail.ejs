@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<main>
+    <div class="course-header">
+        <h1><%= course.title %></h1>
+        <p><strong>Course ID:</strong> <%= course.id %></p>
+        <p><strong>Credits:</strong> <%= course.credits %></p>
+        <p><%= course.description %></p>
+    </div>
+
+    <% if (Object.keys(queryParams).length > 0) { %>
+        <section class="query-debug">
+            <h2>Query Parameters</h2>
+            <pre><%= JSON.stringify(queryParams, null, 2) %></pre>
+        </section>
+    <% } %>
+
+    <div class="sections">
+        <% course.sections.forEach(section => { %>
+            <div class="section-item">
+                <p><strong><%= section.time %></strong> | Room: <%= section.room %> | Professor: <%= section.professor %></p>
+            </div>
+        <% }); %>
+    </div>
+
+    <p><a href="/catalog">&larr; Back to Catalog</a></p>
+</main>
+<%- include('partials/footer') %>

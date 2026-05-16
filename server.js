@@ -1,55 +1,46 @@
 import express from 'express';
-import { fileURLToPath } from 'url';
 import path from 'path';
-import { WebSocketServer } from 'ws';
+import { fileURLToPath } from 'url';
 
-const NODE_ENV = process.env.NODE_ENV || 'production';
-const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
-const WS_PORT = PORT + 1;
+// Import MVC components
+import routes from './src/controllers/routes.js';
+import { addLocalVariables } from './src/middleware/global.js';
 
+/**
+ * Server configuration
+ */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || 'production';
+const PORT = process.env.PORT || 3000;
 
+/**
+ * Setup Express Server
+ */
 const app = express();
 
+/**
+ * Configure Express
+ */
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use((req, res, next) => {
-    res.locals.NODE_ENV = NODE_ENV.toLowerCase();
-    next();
-});
+/**
+ * Global Middleware
+ */
+app.use(addLocalVariables);
 
-app.get('/', (req, res) => {
-    res.render('home', { title: 'Welcome Home' });
-});
+/**
+ * Routes
+ */
+app.use('/', routes);
 
-app.get('/about', (req, res) => {
-    res.render('about', { title: 'About Me' });
-});
+/**
+ * Error Handling
+ */
 
-app.get('/products', (req, res) => {
-    res.render('products', { title: 'Our Products' });
-});
-
-if (NODE_ENV.includes('dev')) {
-    const wss = new WebSocketServer({ port: WS_PORT });
-
-    wss.on('connection', (socket) => {
-        socket.on('error', (err) => {
-            console.error('WebSocket error:', err);
-        });
-    });
-
-// Test route for 500 errors
-app.get('/test-error', (req, res, next) => {
-    const err = new Error('This is a test error');
-    err.status = 500;
-    next(err);
-});
-
-    // Catch-all route for 404 errors
+// 404 handler
 app.use((req, res, next) => {
     const err = new Error('Page Not Found');
     err.status = 404;
@@ -85,9 +76,32 @@ app.use((err, req, res, next) => {
         }
     }
 });
-    console.log(`WebSocket server running on ws://127.0.0.1:${WS_PORT}`);
+
+/**
+ * Start WebSocket Server in Development Mode; used for live reloading
+ */
+if (NODE_ENV.includes('dev')) {
+    const ws = await import('ws');
+
+    try {
+        const wsPort = parseInt(PORT) + 1;
+        const wsServer = new ws.WebSocketServer({ port: wsPort });
+
+        wsServer.on('listening', () => {
+            console.log(`WebSocket server is running on port ${wsPort}`);
+        });
+
+        wsServer.on('error', (error) => {
+            console.error('WebSocket server error:', error);
+        });
+    } catch (error) {
+        console.error('Failed to start WebSocket server:', error);
+    }
 }
 
+/**
+ * Start Server
+ */
 app.listen(PORT, () => {
     console.log(`Server is running on http://127.0.0.1:${PORT}`);
 });

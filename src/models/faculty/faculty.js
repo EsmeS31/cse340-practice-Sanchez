@@ -77,6 +77,7 @@ const faculty = {
 const getFacultyById = (facultyId) => {
     return faculty[facultyId] || null;
 };
+
 const getSortedFaculty = (sortBy) => {
 
     const validSorts = ['name', 'department', 'title'];

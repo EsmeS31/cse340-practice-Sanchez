@@ -88,6 +88,9 @@ const getSortedFaculty = (sortBy) => {
 
     // Create an array of all faculty members
     const facultyArray = [];
+    for (const key in faculty) {
+        facultyArray.push({...faculty[key], id: key});
+    }
 
     // Sort the array by the chosen property
     facultyArray.sort((a, b) => {

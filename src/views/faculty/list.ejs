@@ -1,30 +1,30 @@
 <%- include('../partials/header') %>
-<main>
-    <h1>Faculty Directory</h1>
 
-    <p>
-        Sort By:
-        <a href="/faculty?sort=name">Name</a> |
-        <a href="/faculty?sort=department">Department</a> |
-        <a href="/faculty?sort=title">Title</a>
-    </p>
+<h1>Faculty Directory</h1>
 
-    <ul>
-        <% faculty.forEach(member => { %>
+<p>
+    Sort By:
+    <a href="/faculty?sort=name">Name</a> |
+    <a href="/faculty?sort=department">Department</a> |
+    <a href="/faculty?sort=title">Title</a>
+</p>
 
-            <li>
-                <h2>
-                    <a href="/faculty/<%= member.id %>">
-                        <%= member.name %>
-                    </a>
-                </h2>
+<ul>
+    <% faculty.forEach(member => { %>
 
-                <p><strong>Department:</strong> <%= member.department %></p>
+        <li>
+            <h2>
+                <a href="/faculty/<%= member.id %>">
+                    <%= member.name %>
+                </a>
+            </h2>
 
-                <p><strong>Title:</strong> <%= member.title %></p>
-            </li>
+            <p><strong>Department:</strong> <%= member.department %></p>
 
-        <% }) %>
-    </ul>
-</main>
+            <p><strong>Title:</strong> <%= member.title %></p>
+        </li>
+
+    <% }) %>
+</ul>
+
 <%- include('../partials/footer') %>
